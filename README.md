@@ -8,7 +8,6 @@
 
 A **modern web-based emulator** for the classic **Denon DN-1000F CD player**, bringing back its iconic functionality to your browser using **Web Audio API** and **JavaScript Media Tags**.
 
----
 
 ## 📌 Overview
 
@@ -66,13 +65,17 @@ DN-1000F-Web-Emulator/
 - **Media Tags Library (jsmediatags)**
 - **Responsive Design**
 
+
+## 🗺️ Roadmap
+
+Check out our [Project Roadmap](.github/ROADMAP.md) to see what's planned for future releases, including mobile responsiveness and MIDI support.
+
 ---
 
 ## 📌 Contributing
 
-If you'd like to improve this project or add features, feel free to open a PR! We welcome all contributions.
+If you'd like to improve this project or add features, please read our [Contributing Guidelines](.github/CONTRIBUTING.md). We welcome all contributions!
 
----
 
 ## ❤️ License
 
