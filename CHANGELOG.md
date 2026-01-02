@@ -15,6 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Architecture**: Restructured project into a modular framework (`core/`, `consoles/`, `assets/`).
 - **Launcher**: Added main `index.html` launcher to select between different consoles.
 - **Migration**: Moved DN-1000F emulator to `consoles/dn-1000f/`.
+- **Prototypes**: Added `consoles/dj-console/` (Dual Deck Prototype).
+- **References**: Added `consoles/MixKitPro/` for future feature extraction.
+- **References**: Added `consoles/mixkit/` (MixKit Web) as an additional reference implementation.
+- **Documentation**: Created `docs/index.md` detailing the architecture plan for Core Audio vs UI Controller.
+
+### Changed
+- **Refactor**: Extracted `dn-1000f` inline code into `style.css` and `app.js` for better maintainability.
+
+### Removed
+- **Cleanup**: Removed legacy `consoles/dj-console_early_version/`.
 
 ## [1.0.0] - 2025-11-11
 

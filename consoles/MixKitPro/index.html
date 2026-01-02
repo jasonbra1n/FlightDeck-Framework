@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ Toolkit Pro</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dj-container">
+        <header class="header">
+            <h1>🎧 DJ Toolkit Pro</h1>
+            <button class="control-btn" onclick="openSettings()">⚙️ Settings</button>
+            <button class="control-btn" onclick="exportSession()">💾 Export</button>
+            <button class="control-btn" onclick="document.getElementById('importSession').click()">📁 Import</button>
+            <input type="file" id="importSession" accept=".json" style="display:none" onchange="importSession(event)">
+            <button class="control-btn" id="togglePlaylistBtn">🎹 Playlist</button>
+        </header>
+
+        <main class="main-content">
+            <!-- Deck A -->
+            <div class="deck" id="deckA">
+                <div class="deck-header">DECK A</div>
+                
+                <div class="track-info drop-zone" ondrop="dropHandler(event, 'A')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)">
+                    <img class="album-art" id="albumArtA" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjMzMzIi8+CjxwYXRoIGQ9Ik0yNSAxNUwyNSAzNSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiLz4KPHN0cm9rZSBkPSJNMTUgMjVMMzUgMjUiIHN0cm9rZT0iIzY2NiIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjwvc3ZnPgo=" alt="No Track">
+                    <div class="track-details">
+                        <div class="track-title" id="titleA">No track loaded</div>
+                        <div class="track-artist" id="artistA">Select a file</div>
+                    </div>
+                </div>
+
+                <div class="file-input-wrapper">
+                    <input type="file" class="file-input" id="fileA" accept="audio/*" onchange="loadTrack('A', this.files[0])">
+                    <button class="file-button" onclick="document.getElementById('fileA').click()">Browse Files</button>
+                </div>
+
+                <div class="bpm-display" id="bpmA">BPM: --</div>
+
+                <div class="controls-vu-container">
+                    <div class="controls">
+                        <button class="control-btn" id="playA" onclick="togglePlay('A')">▶️ Play</button>
+                        <button class="control-btn" onclick="stop('A')">⏹️ Stop</button>
+                        <button class="control-btn" id="loopA" onclick="toggleLoop('A')">🔄 Loop</button>
+                        <button class="control-btn" id="syncA" onclick="syncTempo('A')">🔗 Sync</button>
+                        <button class="control-btn" id="keylockA" onclick="toggleKeylock('A')">🔒 Key Lock</button>
+                    </div>
+                    <div class="vu-meter-stereo" id="vuMeterA">
+                        <div class="vu-channel">
+                            <div class="vu-bar-stereo"><div id="vuBarAL" class="vu-bar"></div></div>
+                            <div class="vu-label">L</div>
+                        </div>
+                        <div class="vu-channel">
+                            <div class="vu-bar-stereo"><div id="vuBarAR" class="vu-bar"></div></div>
+                            <div class="vu-label">R</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-container" id="progressA" onclick="seek('A', event)">
+                    <div class="progress-bar" id="progressBarA"></div>
+                    <div class="time-display" id="timeA">0:00 / 0:00</div>
+                    <div class="seek-tooltip" id="seekTooltipA">0:00</div>
+                </div>
+
+                <div class="waveform">
+                    <canvas class="waveform-canvas" id="waveformA"></canvas>
+                </div>
+
+                <div class="slider-container">
+                    <label>Tempo ±16%</label>
+                    <input type="range" class="slider" id="tempoA" min="-16" max="16" value="0" step="0.01" oninput="setTempo('A', this.value)">
+                    <span id="tempoValueA">0.00%</span>
+                </div>
+
+                <div class="effects-panel">
+                    <div class="effect-control">
+                        <div id="reverbKnobA" class="effect-knob" onmousedown="startKnobTurn(event, 'A', 'reverb')"></div>
+                        <label>Reverb</label>
+                    </div>
+                    <div class="effect-control">
+                        <div id="delayKnobA" class="effect-knob" onmousedown="startKnobTurn(event, 'A', 'delay')"></div>
+                        <label>Delay</label>
+                    </div>
+                    <div class="effect-control">
+                        <div id="filterKnobA" class="effect-knob" onmousedown="startKnobTurn(event, 'A', 'filter')"></div>
+                        <label>Filter</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Mixer -->
+            <div class="mixer">
+                <div class="effect-control">
+                    <div id="masterVolumeKnob" class="effect-knob" onmousedown="startKnobTurn(event, 'master', 'volume')"></div>
+                    <label>Master Volume</label>
+                </div>
+
+                <div class="spectrum">
+                    <canvas class="spectrum-canvas" id="spectrumCanvas"></canvas>
+                </div>
+
+                <div class="vu-meter-stereo" id="vuMeterMaster">
+                    <div class="vu-channel">
+                        <div class="vu-bar-stereo"><div id="vuBarMasterL" class="vu-bar"></div></div>
+                        <div class="vu-label">L</div>
+                    </div>
+                    <div class="vu-channel">
+                        <div class="vu-bar-stereo"><div id="vuBarMasterR" class="vu-bar"></div></div>
+                        <div class="vu-label">R</div>
+                    </div>
+                </div>
+
+                <button class="control-btn" onclick="toggleAutomix()">🤖 Automix</button>
+
+                <div class="deck-volume-controls">
+                    <label>Volume</label>
+                    <div class="deck-volume-sliders">
+                        <div class="slider-container vertical">
+                            <input type="range" class="slider" id="volumeA" min="0" max="100" value="75" oninput="setVolume('A', this.value)">
+                            <label>A</label>
+                        </div>
+                        <div class="slider-container vertical">
+                            <input type="range" class="slider" id="volumeB" min="0" max="100" value="75" oninput="setVolume('B', this.value)">
+                            <label>B</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="crossfader-container">
+                    <label>Crossfader</label>
+                    <input type="range" class="crossfader slider" id="crossfader" min="0" max="100" value="50" oninput="setCrossfader(this.value)">
+                </div>
+            </div>
+
+            <!-- Deck B -->
+            <div class="deck" id="deckB">
+                <div class="deck-header">DECK B</div>
+                
+                <div class="track-info drop-zone" ondrop="dropHandler(event, 'B')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)">
+                    <img class="album-art" id="albumArtB" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjMzMzIi8+CjxwYXRoIGQ9Ik0yNSAxNUwyNSAzNSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiLz4KPHN0cm9rZSBkPSJNMTUgMjVMMzUgMjUiIHN0cm9rZT0iIzY2NiIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjwvc3ZnPgo=" alt="No Track">
+                    <div class="track-details">
+                        <div class="track-title" id="titleB">No track loaded</div>
+                        <div class="track-artist" id="artistB">Select a file</div>
+                    </div>
+                </div>
+
+                <div class="file-input-wrapper">
+                    <input type="file" class="file-input" id="fileB" accept="audio/*" onchange="loadTrack('B', this.files[0])">
+                    <button class="file-button" onclick="document.getElementById('fileB').click()">Browse Files</button>
+                </div>
+
+                <div class="bpm-display" id="bpmB">BPM: --</div>
+
+                <div class="controls-vu-container">
+                    <div class="controls">
+                        <button class="control-btn" id="playB" onclick="togglePlay('B')">▶️ Play</button>
+                        <button class="control-btn" onclick="stop('B')">⏹️ Stop</button>
+                        <button class="control-btn" id="loopB" onclick="toggleLoop('B')">🔄 Loop</button>
+                        <button class="control-btn" id="syncB" onclick="syncTempo('B')">🔗 Sync</button>
+                        <button class="control-btn" id="keylockB" onclick="toggleKeylock('B')">🔒 Key Lock</button>
+                    </div>
+                    <div class="vu-meter-stereo" id="vuMeterB">
+                        <div class="vu-channel">
+                            <div class="vu-bar-stereo"><div id="vuBarBL" class="vu-bar"></div></div>
+                            <div class="vu-label">L</div>
+                        </div>
+                        <div class="vu-channel">
+                            <div class="vu-bar-stereo"><div id="vuBarBR" class="vu-bar"></div></div>
+                            <div class="vu-label">R</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-container" id="progressB" onclick="seek('B', event)">
+                    <div class="progress-bar" id="progressBarB"></div>
+                    <div class="time-display" id="timeB">0:00 / 0:00</div>
+                    <div class="seek-tooltip" id="seekTooltipB">0:00</div>
+                </div>
+
+                <div class="waveform">
+                    <canvas class="waveform-canvas" id="waveformB"></canvas>
+                </div>
+
+                <div class="slider-container">
+                    <label>Tempo ±16%</label>
+                    <input type="range" class="slider" id="tempoB" min="-16" max="16" value="0" step="0.01" oninput="setTempo('B', this.value)">
+                    <span id="tempoValueB">0.00%</span>
+                </div>
+
+                <div class="effects-panel">
+                    <div class="effect-control">
+                        <div id="reverbKnobB" class="effect-knob" onmousedown="startKnobTurn(event, 'B', 'reverb')"></div>
+                        <label>Reverb</label>
+                    </div>
+                    <div class="effect-control">
+                        <div id="delayKnobB" class="effect-knob" onmousedown="startKnobTurn(event, 'B', 'delay')"></div>
+                        <label>Delay</label>
+                    </div>
+                    <div class="effect-control">
+                        <div id="filterKnobB" class="effect-knob" onmousedown="startKnobTurn(event, 'B', 'filter')"></div>
+                        <label>Filter</label>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <div class="playlist-container collapsed">
+            <div class="playlist" id="playlist">
+                <h3>Playlist <button class="control-btn" id="closePlaylistBtn" onclick="closePlaylist()">❌</button></h3>
+                <div id="playlistItems"></div>
+                <div class="playlist-controls">
+                    <button class="control-btn" onclick="document.getElementById('addTracksInput').click()">➕ Add Tracks</button>
+                    <input type="file" id="addTracksInput" multiple accept="audio/*" style="display:none" onchange="addToPlaylist(this.files)">
+                    <button class="control-btn" onclick="document.getElementById('addFolderInput').click()">📂 Add Folder</button>
+                    <input type="file" id="addFolderInput" multiple accept="audio/*" style="display:none" onchange="addToPlaylist(this.files)" webkitdirectory>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <h2>Settings</h2>
+            <div style="margin: 20px 0;">
+                <label>Crossfader Curve:</label>
+                <select id="crossfaderCurve" onchange="setCrossfaderCurve(this.value)">
+                    <option value="linear">Linear</option>
+                    <option value="logarithmic">Logarithmic</option>
+                    <option value="exponential">Exponential</option>
+                </select>
+            </div>
+            <div style="margin: 20px 0;">
+                <label>Audio Latency (ms):</label>
+                <input type="number" id="audioLatency" value="20" min="0" max="100" onchange="setAudioLatency(this.value)">
+            </div>
+            <div style="margin: 20px 0;">
+                <label>Tempo Range:</label>
+                <select id="tempoRange" onchange="setTempoRange(this.value)">
+                    <option value="8">±8%</option>
+                    <option value="16" selected>±16%</option>
+                    <option value="50">±50%</option>
+                </select>
+            </div>
+            <div style="margin: 20px 0;">
+                <label>Theme:</label>
+                <select id="theme" onchange="setTheme(this.value)">
+                    <option value="dark">Dark</option>
+                    <option value="neon">Neon</option>
+                    <option value="classic">Classic</option>
+                </select>
+            </div>
+            <button class="control-btn" onclick="closeSettings()">Close</button>
+        </div>
+    </div>
+
+    <script src="js/jsmediatags.min.js"></script>
+    <script src="js/web-audio-beat-detector.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

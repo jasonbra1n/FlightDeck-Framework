@@ -8,8 +8,10 @@ This document outlines the development roadmap for the Denon DN-1000F Web Emulat
 - [x] **Cue Logic**: Implement setting and recalling cue points.
 - [x] **Display**: Implement the 7-segment display logic for Time Elapsed/Remaining.
 - [ ] **Offline Capability**: Remove CDN dependencies (e.g., jsmediatags) and serve all assets locally.
-- [ ] **Project Restructuring**: Reorganize folder structure to support multiple consoles/emulators.
+- [x] **Project Restructuring**: Reorganize folder structure to support multiple consoles/emulators.
 - [ ] **Core Extraction**: Refactor `AudioEngine` into a shared module usable by different consoles.
+- [x] **DJ Console Prototype**: Integrate the dual-deck `dj-console` prototype into the repository structure.
+- [ ] **MixKitPro Evaluation**: Analyze `consoles/MixKitPro` for reusable patterns (spectrum analyzer, mixer logic) to merge into `core/`.
 
 ## Medium-Term (UX & Features)
 - [ ] **Mobile Responsiveness**: Optimize touch targets for buttons and sliders for mobile DJing.
@@ -20,6 +22,7 @@ This document outlines the development roadmap for the Denon DN-1000F Web Emulat
 ## Long-Term (Advanced)
 - [ ] **MIDI Support**: Investigate Web MIDI API to allow hardware controllers to drive the UI.
 - [ ] **Looping**: Add loop in/out functionality (modern feature addition to the classic hardware).
+- [ ] **Console Standardization**: Refactor `dj-console` to use the shared `core/` AudioEngine and UI components.
 - [ ] **Modular Audio Architecture**: Standardize the audio engine to support future emulators and custom consoles within a unified "DJ System" (supporting keyboard/MIDI mapping).
 
 ## Completed

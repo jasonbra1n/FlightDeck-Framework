@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Professional DJ Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dj-console">
+        <!-- Left Deck -->
+        <div class="deck deck-left" data-deck="1">
+            <div class="deck-header">
+                <div class="track-info">
+                    <div class="track-title" id="track-title-1">No Track Loaded</div>
+                    <div class="track-artist" id="track-artist-1">Load audio file to begin</div>
+                </div>
+                <div class="deck-controls-top">
+                    <button class="control-btn load-btn" id="load-btn-1">
+                        <span>LOAD</span>
+                    </button>
+                    <button class="control-btn eject-btn" id="eject-btn-1">
+                        <span>EJECT</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="waveform-container">
+                <canvas id="waveform-1" class="waveform-canvas"></canvas>
+                <div class="waveform-overlay">
+                    <div class="playhead" id="playhead-1"></div>
+                    <div class="cue-markers" id="cue-markers-1"></div>
+                </div>
+            </div>
+
+            <div class="deck-display">
+                <div class="display-row">
+                    <div class="bpm-display">
+                        <span class="label">BPM</span>
+                        <span class="value" id="bpm-1">--</span>
+                    </div>
+                    <div class="pitch-display">
+                        <span class="label">PITCH</span>
+                        <span class="value" id="pitch-1">0.0%</span>
+                    </div>
+                    <div class="time-display">
+                        <span class="label">TIME</span>
+                        <span class="value" id="time-1">00:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="jog-wheel-container">
+                <div class="jog-wheel" id="jog-wheel-1">
+                    <div class="jog-wheel-ring"></div>
+                    <div class="jog-wheel-center" id="jog-center-1">
+                        <div class="album-art" id="album-art-1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="transport-controls">
+                <div class="control-row">
+                    <button class="control-btn play-btn" id="play-btn-1">
+                        <span>▶</span>
+                    </button>
+                    <button class="control-btn cue-btn" id="cue-btn-1">
+                        <span>CUE</span>
+                    </button>
+                </div>
+                <div class="control-row">
+                    <button class="control-btn prev-btn" id="prev-btn-1">
+                        <span>⏮</span>
+                    </button>
+                    <button class="control-btn next-btn" id="next-btn-1">
+                        <span>⏭</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pitch-controls">
+                <div class="pitch-fader-container">
+                    <input type="range" class="pitch-fader" id="pitch-fader-1" min="-1" max="1" step="0.01" value="0">
+                    <div class="pitch-readout" id="pitch-readout-1">0.0%</div>
+                </div>
+                <div class="pitch-buttons">
+                    <button class="control-btn pitch-down" id="pitch-down-1">-</button>
+                    <button class="control-btn pitch-up" id="pitch-up-1">+</button>
+                </div>
+                <div class="pitch-options">
+                    <button class="control-btn sync-btn" id="sync-btn-1">
+                        <span>SYNC</span>
+                    </button>
+                    <button class="control-btn master-tempo" id="master-tempo-1">
+                        <span>MT</span>
+                    </button>
+                    <button class="control-btn pitch-reset" id="pitch-reset-1">
+                        <span>RESET</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="hot-cues">
+                <div class="hot-cue-row">
+                    <button class="hot-cue-btn" id="cue-1-1">1</button>
+                    <button class="hot-cue-btn" id="cue-2-1">2</button>
+                </div>
+                <div class="hot-cue-row">
+                    <button class="hot-cue-btn" id="cue-3-1">3</button>
+                    <button class="hot-cue-btn" id="cue-4-1">4</button>
+                </div>
+            </div>
+
+            <input type="file" id="file-input-1" accept="audio/*" style="display: none;">
+        </div>
+
+        <!-- Center Mixer -->
+        <div class="mixer">
+            <div class="mixer-header">
+                <div class="mixer-title">DJ MIXER</div>
+            </div>
+
+            <div class="mixer-content">
+                <!-- Channel 1 (Left Deck) -->
+                <div class="channel-strip" data-channel="1">
+                    <div class="channel-label">CH1</div>
+                    <div class="channel-controls">
+                        <div class="gain-control">
+                            <label>GAIN</label>
+                            <div class="knob-container">
+                                <input type="range" class="gain-knob" id="gain-1" min="0" max="2" step="0.01" value="1">
+                                <div class="knob-visual" id="gain-visual-1"></div>
+                            </div>
+                        </div>
+
+                        <div class="eq-controls">
+                            <div class="eq-control">
+                                <label>HI</label>
+                                <div class="knob-container">
+                                    <input type="range" class="eq-knob" id="eq-high-1" min="-24" max="24" step="0.1" value="0">
+                                    <div class="knob-visual" id="eq-high-visual-1"></div>
+                                </div>
+                            </div>
+                            <div class="eq-control">
+                                <label>MID</label>
+                                <div class="knob-container">
+                                    <input type="range" class="eq-knob" id="eq-mid-1" min="-24" max="24" step="0.1" value="0">
+                                    <div class="knob-visual" id="eq-mid-visual-1"></div>
+                                </div>
+                            </div>
+                            <div class="eq-control">
+                                <label>LOW</label>
+                                <div class="knob-container">
+                                    <input type="range" class="eq-knob" id="eq-low-1" min="-24" max="24" step="0.1" value="0">
+                                    <div class="knob-visual" id="eq-low-visual-1"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="channel-fader-container">
+                            <div class="fader-track">
+                                <input type="range" class="channel-fader" id="channel-fader-1" min="0" max="1" step="0.01" value="0.8">
+                                <div class="fader-handle" id="fader-handle-1"></div>
+                            </div>
+                            <div class="fader-label">CH1</div>
+                        </div>
+
+                        <div class="channel-buttons">
+                            <button class="control-btn pfl-btn" id="pfl-btn-1">
+                                <span>PFL</span>
+                            </button>
+                        </div>
+
+                        <div class="vu-meter" id="vu-meter-1">
+                            <div class="vu-bars">
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Master Section -->
+                <div class="master-section">
+                    <div class="crossfader-section">
+                        <label class="section-label">CROSSFADER</label>
+                        <div class="crossfader-container">
+                            <div class="crossfader-track">
+                                <input type="range" class="crossfader" id="crossfader" min="0" max="1" step="0.01" value="0.5">
+                                <div class="crossfader-handle" id="crossfader-handle"></div>
+                            </div>
+                            <div class="crossfader-labels">
+                                <span>CH1</span>
+                                <span>CH2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="master-controls">
+                        <div class="master-volume">
+                            <label>MASTER</label>
+                            <div class="volume-fader-container">
+                                <div class="volume-fader-track">
+                                    <input type="range" class="master-fader" id="master-fader" min="0" max="1" step="0.01" value="0.8">
+                                    <div class="volume-fader-handle" id="master-handle"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="master-vu">
+                            <label>MASTER</label>
+                            <div class="stereo-vu" id="master-vu">
+                                <div class="vu-channel left">
+                                    <div class="vu-bars">
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                    </div>
+                                </div>
+                                <div class="vu-channel right">
+                                    <div class="vu-bars">
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                        <div class="vu-bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Channel 2 (Right Deck) -->
+                <div class="channel-strip" data-channel="2">
+                    <div class="channel-label">CH2</div>
+                    <div class="channel-controls">
+                        <div class="gain-control">
+                            <label>GAIN</label>
+                            <div class="knob-container">
+                                <input type="range" class="gain-knob" id="gain-2" min="0" max="2" step="0.01" value="1">
+                                <div class="knob-visual" id="gain-visual-2"></div>
+                            </div>
+                        </div>
+
+                        <div class="eq-controls">
+                            <div class="eq-control">
+                                <label>HI</label>
+                                <div class="knob-container">
+                                    <input type="range" class="eq-knob" id="eq-high-2" min="-24" max="24" step="0.1" value="0">
+                                    <div class="knob-visual" id="eq-high-visual-2"></div>
+                                </div>
+                            </div>
+                            <div class="eq-control">
+                                <label>MID</label>
+                                <div class="knob-container">
+                                    <input type="range" class="eq-knob" id="eq-mid-2" min="-24" max="24" step="0.1" value="0">
+                                    <div class="knob-visual" id="eq-mid-visual-2"></div>
+                                </div>
+                            </div>
+                            <div class="eq-control">
+                                <label>LOW</label>
+                                <div class="knob-container">
+                                    <input type="range" class="eq-knob" id="eq-low-2" min="-24" max="24" step="0.1" value="0">
+                                    <div class="knob-visual" id="eq-low-visual-2"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="channel-fader-container">
+                            <div class="fader-track">
+                                <input type="range" class="channel-fader" id="channel-fader-2" min="0" max="1" step="0.01" value="0.8">
+                                <div class="fader-handle" id="fader-handle-2"></div>
+                            </div>
+                            <div class="fader-label">CH2</div>
+                        </div>
+
+                        <div class="channel-buttons">
+                            <button class="control-btn pfl-btn" id="pfl-btn-2">
+                                <span>PFL</span>
+                            </button>
+                        </div>
+
+                        <div class="vu-meter" id="vu-meter-2">
+                            <div class="vu-bars">
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                                <div class="vu-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Deck -->
+        <div class="deck deck-right" data-deck="2">
+            <div class="deck-header">
+                <div class="track-info">
+                    <div class="track-title" id="track-title-2">No Track Loaded</div>
+                    <div class="track-artist" id="track-artist-2">Load audio file to begin</div>
+                </div>
+                <div class="deck-controls-top">
+                    <button class="control-btn load-btn" id="load-btn-2">
+                        <span>LOAD</span>
+                    </button>
+                    <button class="control-btn eject-btn" id="eject-btn-2">
+                        <span>EJECT</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="waveform-container">
+                <canvas id="waveform-2" class="waveform-canvas"></canvas>
+                <div class="waveform-overlay">
+                    <div class="playhead" id="playhead-2"></div>
+                    <div class="cue-markers" id="cue-markers-2"></div>
+                </div>
+            </div>
+
+            <div class="deck-display">
+                <div class="display-row">
+                    <div class="bpm-display">
+                        <span class="label">BPM</span>
+                        <span class="value" id="bpm-2">--</span>
+                    </div>
+                    <div class="pitch-display">
+                        <span class="label">PITCH</span>
+                        <span class="value" id="pitch-2">0.0%</span>
+                    </div>
+                    <div class="time-display">
+                        <span class="label">TIME</span>
+                        <span class="value" id="time-2">00:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="jog-wheel-container">
+                <div class="jog-wheel" id="jog-wheel-2">
+                    <div class="jog-wheel-ring"></div>
+                    <div class="jog-wheel-center" id="jog-center-2">
+                        <div class="album-art" id="album-art-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="transport-controls">
+                <div class="control-row">
+                    <button class="control-btn play-btn" id="play-btn-2">
+                        <span>▶</span>
+                    </button>
+                    <button class="control-btn cue-btn" id="cue-btn-2">
+                        <span>CUE</span>
+                    </button>
+                </div>
+                <div class="control-row">
+                    <button class="control-btn prev-btn" id="prev-btn-2">
+                        <span>⏮</span>
+                    </button>
+                    <button class="control-btn next-btn" id="next-btn-2">
+                        <span>⏭</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pitch-controls">
+                <div class="pitch-fader-container">
+                    <input type="range" class="pitch-fader" id="pitch-fader-2" min="-1" max="1" step="0.01" value="0">
+                    <div class="pitch-readout" id="pitch-readout-2">0.0%</div>
+                </div>
+                <div class="pitch-buttons">
+                    <button class="control-btn pitch-down" id="pitch-down-2">-</button>
+                    <button class="control-btn pitch-up" id="pitch-up-2">+</button>
+                </div>
+                <div class="pitch-options">
+                    <button class="control-btn sync-btn" id="sync-btn-2">
+                        <span>SYNC</span>
+                    </button>
+                    <button class="control-btn master-tempo" id="master-tempo-2">
+                        <span>MT</span>
+                    </button>
+                    <button class="control-btn pitch-reset" id="pitch-reset-2">
+                        <span>RESET</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="hot-cues">
+                <div class="hot-cue-row">
+                    <button class="hot-cue-btn" id="cue-1-2">5</button>
+                    <button class="hot-cue-btn" id="cue-2-2">6</button>
+                </div>
+                <div class="hot-cue-row">
+                    <button class="hot-cue-btn" id="cue-3-2">7</button>
+                    <button class="hot-cue-btn" id="cue-4-2">8</button>
+                </div>
+            </div>
+
+            <input type="file" id="file-input-2" accept="audio/*" style="display: none;">
+        </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Initializing Audio Engine...</div>
+    </div>
+
+    <!-- Audio context initialize button for mobile -->
+    <div class="audio-init" id="audio-init">
+        <button class="init-btn" id="init-audio-btn">Initialize Audio</button>
+    </div>
+
+    <script src="audio-engine.js"></script>
+    <script src="dj-console.js"></script>
+</body>
+</html>

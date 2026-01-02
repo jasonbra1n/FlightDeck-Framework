@@ -1,0 +1,348 @@
+/* Basic Setup */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden; /* Prevent scrolling for full-screen app */
+}
+
+#app-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: #2a2a2a;
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #ffffff;
+    border-bottom: 2px solid #444;
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+    margin-bottom: 1rem; /* Reduced margin for better space utilization */
+}
+
+/* Layout */
+.decks-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex: 1; /* Take up remaining space */
+    min-height: 0; /* Allow flexbox to shrink */
+}
+
+.deck {
+    flex: 1;
+    background-color: #333;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #444;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Allow flexbox to work properly */
+}
+
+.master-controls {
+    flex: 1;
+    background-color: #333;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #444;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 0; /* Allow flexbox to work properly */
+}
+
+/* Deck Elements */
+.track-info {
+    background-color: #222;
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 1.2em;
+}
+
+.waveform-container {
+    background-color: #000;
+    flex: 1; /* Take up available space */
+    min-height: 80px; /* Minimum height */
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.time-display {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+progress {
+    width: 100%;
+    height: 10px;
+    margin-bottom: 0;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control-row {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.main-controls-row {
+    justify-content: space-between;
+}
+
+button {
+    background-color: #555;
+    color: white;
+    border: 1px solid #777;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #666;
+}
+
+button:active {
+    background-color: #777;
+}
+
+.file-input {
+    flex-grow: 1;
+}
+
+input[type="range"] {
+    flex-grow: 1;
+}
+
+/* Mixer Controls */
+.mixer-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    flex: 1; /* Take up remaining space in mixer */
+    justify-content: flex-start; /* Start from top but with margin */
+    margin-top: 2rem; /* Add the spacing back from the title */
+}
+
+.volume-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    gap: 1rem;
+}
+
+.deck-volume-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 60px; /* Ensure enough space for vertical sliders */
+}
+
+.volume-slider {
+    -webkit-appearance: none; /* Reset default appearance */
+    appearance: none;
+    width: 100px; /* Horizontal length of the slider */
+    height: 8px; /* Thin track height */
+    background: #444; /* Track color */
+    outline: none;
+    transform: rotate(270deg); /* Rotate to make vertical */
+    transform-origin: center;
+    margin: 0 auto; /* Center horizontally */
+    border-radius: 4px;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #3498db;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #3498db;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.crossfader-container, .master-volume-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: 80%;
+    margin: 0 auto;
+}
+
+label {
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.utility-controls {
+    margin-top: 1.5rem; /* Increased margin for better separation */
+    border-top: 1px solid #444;
+    padding-top: 1.5rem; /* Increased padding for better separation */
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .decks-container {
+        flex-direction: column;
+        height: auto;
+    }
+    .deck, .master-controls {
+        flex: none;
+        width: 100%;
+    }
+    .crossfader-container, .master-volume-container {
+        width: 100%;
+    }
+    /* Keep volume sliders side by side on mobile */
+    .volume-row {
+        flex-direction: row; /* Changed from column to row */
+        justify-content: space-around;
+        align-items: center;
+    }
+}
+
+/* Force landscape orientation for mobile */
+@media (max-width: 768px) and (orientation: portrait) {
+    body::before {
+        content: "Please rotate your device to landscape mode";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #1a1a1a;
+        color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        text-align: center;
+        z-index: 9999;
+    }
+    
+    #app-container {
+        display: none;
+    }
+}
+
+/* Tempo Control Specifics */
+.tempo-slider {
+    flex-grow: 1;
+}
+
+.tempo-display {
+    min-width: 4.5em;
+    text-align: right;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+}
+
+/* Album Art Display */
+.album-art {
+    display: none;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin: 0 auto 1rem;
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 4px;
+}
+
+/* Spectrum Analyzer */
+.spectrum-canvas {
+    width: 100%;
+    flex: 1; /* Take up available space */
+    min-height: 60px; /* Minimum height */
+    background-color: #000;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border: 1px solid #444;
+}
+
+/* Seek/Scrub Styles */
+.progress-bar-container {
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+progress {
+    pointer-events: none;
+}
+
+.seek-tooltip {
+    position: absolute;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    pointer-events: none;
+    z-index: 100;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+/* Drag and Drop Styling */
+.deck.drag-over {
+    border-color: #3498db;
+    border-style: dashed;
+}
+
+/* VU Meter Styles */
+.vu-meter-container {
+    display: flex;
+    gap: 4px;
+    padding: 5px;
+    border: 1px solid #222;
+    background-color: #1a1a1a;
+    border-radius: 4px;
+    height: 50px;
+    box-sizing: border-box;
+}
