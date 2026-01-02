@@ -1,4 +1,4 @@
-# Contributing to Denon DN-1000F Web Emulator
+# Contributing to FlightDeck Framework
 
 ## Tech Stack
 - **Frontend**: HTML5, CSS3 (Custom UI mimicking hardware)
@@ -17,8 +17,9 @@ This emulator aims for **authenticity**.
 - **Cue Behavior**: The "Cue" button behavior on Denon players is specific (press to hold/preview, release to stop/return).
 
 ## Directory Structure
-- `index.html`: Main entry point.
-- `css/`: Stylesheets.
-- `js/`: Application logic.
+- `core/`: Shared logic (AudioEngine, MIDI, Utils).
+- `consoles/`: Individual player implementations (e.g., `dn-1000f/`).
+- `assets/`: Shared resources (fonts, icons, libs).
+- `index.html`: Main launcher.
 - `.gemini/`: AI context files.
 - `.github/`: Project documentation.

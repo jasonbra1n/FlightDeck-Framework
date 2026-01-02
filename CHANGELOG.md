@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **Infrastructure**: Added `.github` folder with `ROADMAP.md` and `CONTRIBUTING.md`.
 - **AI Workflow**: Initialized `.gemini` directory with persona and prompt context.
+- **Rebranding**: Project renamed to "FlightDeck Framework" (AVDJ ACADEMY).
+- **Architecture**: Restructured project into a modular framework (`core/`, `consoles/`, `assets/`).
+- **Launcher**: Added main `index.html` launcher to select between different consoles.
+- **Migration**: Moved DN-1000F emulator to `consoles/dn-1000f/`.
 
 ## [1.0.0] - 2025-11-11
 

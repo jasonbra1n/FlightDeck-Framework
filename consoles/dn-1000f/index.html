@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0633259514526906"
+    crossorigin="anonymous"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V213B4EKT7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-V213B4EKT7');
+    </script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DN-1000F Music Player</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.player-container {
+  background: linear-gradient(145deg, #d1d5db, #e5e7eb);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  width: 100%;
+  max-width: 1000px;
+  border-top: 3px solid #9ca3af;
+  border-left: 3px solid #9ca3af;
+}
+
+.player-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 80px;
+  gap: 24px;
+}
+
+/* Display Section */
+.display-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-right: 2px solid #9ca3af;
+  padding-right: 16px;
+}
+
+.display {
+  background: linear-gradient(135deg, #c7e6c7, #a3b8a3);
+  padding: 16px;
+  border-radius: 8px;
+  border: 2px solid #2f4f4f;
+  position: relative;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.display-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Orbitron', monospace;
+  color: #1e3b1e;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.display-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.track-number {
+  font-family: 'Orbitron', monospace;
+  font-size: 72px;
+  color: #1e3b1e;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.time-info {
+  text-align: right;
+}
+
+.time-display {
+  font-family: 'Roboto Mono';
+  font-size: 32px;
+  color: #1e3b1e;
+  font-weight: 500;
+  letter-spacing: -2px; /* Adjust this value as needed */
+
+}
+
+.track-title {
+  font-size: 11px;
+  color: #2f4f4f;
+  margin-top: 4px;
+}
+
+.waveform-container {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  margin-top: 12px;
+}
+
+.waveform-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #ef4444;
+  z-index: 10;
+  transition: left 0.05s linear;
+}
+
+.cue-marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #fbbf24;
+  z-index: 5;
+  display: none;
+}
+
+.led {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #374151;
+  margin-left: 8px;
+}
+
+.led-on {
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+/* Transport Controls */
+.transport-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center; /* ADD THIS LINE */
+}
+
+.control-label {
+  text-align: center;
+  font-size: 11px;
+  color: #4b5563;
+  font-weight: 600;
+}
+
+
+.button-row {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+/* Add this to your <style> block */
+.button-center-wrapper {
+  display: flex;
+  justify-content: center; /* This centers the button horizontally */
+  width: 100%; /* Ensure it spans the full width of the grid cell */
+}
+
+button {
+  background: linear-gradient(145deg, #9ca3af, #6b7280);
+  border: none;
+  border-radius: 4px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+button:hover {
+  background: linear-gradient(145deg, #6b7280, #4b5563);
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.btn-round {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 11px;
+}
+
+.search-group {
+  grid-column: 1 / -1;
+}
+
+/* Main Control Buttons */
+.main-controls {
+  display: flex;
+  gap: 16px;
+}
+
+.main-btn-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.btn-cue {
+  background: linear-gradient(145deg, #ef4444, #dc2626);
+  color: white;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.btn-cue:hover {
+  background: linear-gradient(145deg, #dc2626, #b91c1c);
+}
+
+.btn-play {
+  background: linear-gradient(145deg, #22c55e, #16a34a);
+  color: white;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 18px;
+}
+
+.btn-play:hover {
+  background: linear-gradient(145deg, #16a34a, #15803d);
+}
+
+/* Middle Section */
+.middle-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+}
+
+.album-art {
+  width: 100%;
+  background: linear-gradient(145deg, #9ca3af, #6b7280);
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.album-art .material-icons {
+  font-size: 64px;
+  color: #374151;
+}
+
+.album-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.btn-load {
+  background: linear-gradient(145deg, #3b82f6, #2563eb);
+  color: white;
+  padding: 12px;
+  font-weight: 700;
+}
+
+.btn-load:hover {
+  background: linear-gradient(145deg, #2563eb, #1d4ed8);
+}
+
+.pitch-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-pitch {
+  padding: 12px;
+}
+
+.btn-pitch.active {
+  background: linear-gradient(145deg,  #2563eb, #1d4ed8);
+  color: white;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.pitch-bend-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* Pitch Slider */
+.pitch-slider-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 16px;
+  border-left: 2px solid #9ca3af;
+  position: relative;
+}
+
+.pitch-slider-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 300px;
+}
+
+.pitch-track {
+  position: relative;
+  width: 2px;
+  height: 100%;
+  background: #6b7280;
+  margin-right: 8px;
+}
+
+.pitch-mark {
+  position: absolute;
+  height: 1px;
+  background: #4b5563;
+  left: -6px;
+  width: 14px;
+}
+
+.pitch-mark.major {
+  width: 18px;
+  left: -8px;
+}
+
+.pitch-indicator {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  left: -3px;
+  transition: top 0.1s;
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
+}
+
+.pitch-slider {
+  -webkit-appearance: slider-vertical;
+  appearance: slider-vertical;
+  writing-mode: bt-lr;
+  width: 40px;
+  height: 100%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pitch-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 36px;
+  background: #4b5563;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.pitch-slider::-moz-range-thumb {
+  width: 14px;
+  height: 36px;
+  background: #4b5563;
+  cursor: pointer;
+  border-radius: 2px;
+  border: none;
+}
+
+.pitch-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  margin-left: 8px;
+  font-size: 11px;
+  color: #4b5563;
+  font-weight: 600;
+}
+
+.pitch-value {
+  font-size: 13px;
+  font-family: 'Orbitron', monospace;
+}
+
+.material-icons {
+  font-size: 24px;
+}
+
+@media (max-width: 768px) {
+  .player-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .display-section {
+    border-right: none;
+    padding-right: 0;
+    border-bottom: 2px solid #9ca3af;
+    padding-bottom: 16px;
+  }
+  
+  .pitch-slider-section {
+    border-left: none;
+    padding-left: 0;
+    border-top: 2px solid #9ca3af;
+    padding-top: 16px;
+  }
+  
+  .pitch-slider-container {
+    height: 200px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="player-container">
+  <div class="player-grid">
+    <!-- Left Section: Display & Controls -->
+    <div class="display-section">
+      <!-- Display -->
+      <div class="display">
+        <div class="display-header">
+          <div>
+            <span id="timeMode">ELAPSED</span>
+            <span id="playMode">SINGLE</span>
+            <span class="led" id="cueLed"></span>
+          </div>
+          <div id="pitchDisplay">+0.0%</div>
+        </div>
+        <div class="display-main">
+          <div class="track-number" id="trackNumber">--</div>
+          <div class="time-info">
+            <div class="time-display" id="timeDisplay">00:00.00</div>
+            <div class="track-title" id="trackTitle">NO DISC</div>
+          </div>
+        </div>
+        <div class="waveform-container" id="waveformContainer">
+          <canvas class="waveform-canvas" id="waveformCanvas"></canvas>
+          <div class="playhead" id="playhead" style="left: 0;"></div>
+          <div class="cue-marker" id="cueMarker" style="left: 0;"></div>
+        </div>
+      </div>
+
+      <!-- Transport Controls -->
+      <div class="transport-grid">
+        <div class="control-group">
+          <div class="control-label">TRACK</div>
+          <div class="button-row">
+            <button id="prevTrack" class="btn-icon">
+              <span class="material-icons">skip_previous</span>
+            </button>
+            <button id="nextTrack" class="btn-icon">
+              <span class="material-icons">skip_next</span>
+            </button>
+          </div>
+        </div>
+        
+
+        <div class="control-group">
+          <div class="control-label">TIME</div>
+            <div class="button-center-wrapper"><button id="timeBtn" class="btn-round">ELA</button>
+            </div>
+          </div>
+        
+        <div class="control-group search-group">
+          <div class="control-label">SEARCH</div>
+          <div class="button-row">
+            <button id="rewind" class="btn-icon">
+              <span class="material-icons">fast_rewind</span>
+            </button>
+            <button id="forward" class="btn-icon">
+              <span class="material-icons">fast_forward</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Controls -->
+      <div class="main-controls">
+        <div class="main-btn-group">
+          <div class="control-label">CUE</div>
+          <button id="cueBtn" class="btn-cue">CUE</button>
+        </div>
+        <div class="main-btn-group">
+          <div class="control-label">PLAY/PAUSE</div>
+          <button id="playPauseBtn" class="btn-play">
+            <span class="material-icons">play_arrow</span>
+            <span class="material-icons">pause</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Middle Section: Album Art & Pitch Controls -->
+    <div class="middle-section">
+      <div class="album-art" id="albumArt">
+        <span class="material-icons">music_note</span>
+      </div>
+      <input type="file" id="fileInput" accept="audio/*" multiple style="display: none;">
+      <button id="loadBtn" class="btn-load">LOAD</button>
+      
+      <div class="pitch-controls">
+        <div class="control-label">PITCH</div>
+        <button id="pitchBtn" class="btn-pitch">
+          <span id="pitchBtnText">PITCH OFF</span>
+        </button>
+        <div class="control-label">PITCH BEND</div>
+        <div class="pitch-bend-row">
+          <button id="pitchDown" class="btn-icon">
+            <span class="material-icons">remove</span>
+          </button>
+          <button id="pitchUp" class="btn-icon">
+            <span class="material-icons">add</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Section: Pitch Slider -->
+    <div class="pitch-slider-section">
+      <div class="pitch-slider-container">
+        <div class="pitch-track">
+          <div class="pitch-mark major" style="top: 0;"></div>
+          <div class="pitch-mark" style="top: 25%;"></div>
+          <div class="pitch-mark major" style="top: 50%;"></div>
+          <div class="pitch-mark" style="top: 75%;"></div>
+          <div class="pitch-mark major" style="top: 100%;"></div>
+          <div class="pitch-indicator" id="pitchIndicator" style="top: 50%;"></div>
+        </div>
+        <input id="pitchSlider" class="pitch-slider" type="range" min="-10" max="10" step="0.1" value="0" orient="vertical"/>
+        <div class="pitch-labels">
+          <span>+10%</span>
+          <span class="pitch-value" id="pitchValue">0.0%</span>
+          <span>-10%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// DN-1000F Professional Audio Player
+class DN1000F {
+  constructor() {
+    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    this.tracks = [];
+    this.currentTrack = -1;
+    this.isPlaying = false;
+    this.isPitchEnabled = false;
+    this.pitchValue = 0;
+    this.cuePoint = 0;
+    this.hasCuePoint = false;
+    this.timeMode = 'elapsed';
+    
+    this.source = null;
+    this.buffer = null;
+    this.gainNode = this.audioContext.createGain();
+    this.gainNode.connect(this.audioContext.destination);
+    
+    this.startTime = 0;
+    this.pauseTime = 0;
+    this.startOffset = 0;
+    
+    this.animationId = null;
+    this.searchInterval = null;
+    this.pitchBendInterval = null;
+    this.preBendPitchValue = null;
+    this.pitchReturnInterval = null;
+
+    this.isSeeking = false;
+    this.wasPlayingBeforeSeek = false;
+    
+    this.setupEventListeners();
+    this.updateDisplay();
+  }
+  
+  setupEventListeners() {
+    document.getElementById('loadBtn').addEventListener('click', () => {
+      document.getElementById('fileInput').click();
+    });
+    
+    document.getElementById('fileInput').addEventListener('change', (e) => {
+      this.loadFiles(e.target.files);
+    });
+    
+    document.getElementById('playPauseBtn').addEventListener('click', () => {
+      this.togglePlayPause();
+    });
+    
+    const cueButton = document.getElementById('cueBtn');
+    cueButton.addEventListener('mousedown', (e) => {
+      this.handleCuePress(e);
+    });
+    cueButton.addEventListener('mouseup', (e) => {
+      this.handleCueRelease(e);
+    });
+    cueButton.addEventListener('mouseleave', (e) => {
+      // If the mouse leaves while pressed, treat it as a release
+      if (e.buttons === 1 || e.buttons === 2) {
+        this.handleCueRelease(e);
+      }
+    });
+    // Prevent context menu on right-click to use it for our custom action
+    cueButton.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    document.getElementById('prevTrack').addEventListener('click', () => {
+      this.previousTrack();
+    });
+    
+    document.getElementById('nextTrack').addEventListener('click', () => {
+      this.nextTrack();
+    });
+    
+    document.getElementById('timeBtn').addEventListener('click', () => {
+      this.toggleTimeMode();
+    });
+    
+    document.getElementById('pitchBtn').addEventListener('click', () => {
+      this.togglePitch();
+    });
+    
+    document.getElementById('pitchSlider').addEventListener('input', (e) => {
+      this.setPitch(parseFloat(e.target.value));
+    });
+    
+    // Pitch bend buttons
+    document.getElementById('pitchUp').addEventListener('mousedown', () => {
+      this.startPitchBend(1);
+    });
+    document.getElementById('pitchUp').addEventListener('mouseup', () => {
+      this.stopPitchBend(true);
+    });
+    document.getElementById('pitchUp').addEventListener('mouseleave', () => {
+      this.stopPitchBend(false);
+    });
+    
+    document.getElementById('pitchDown').addEventListener('mousedown', () => {
+      this.startPitchBend(-1);
+    });
+    document.getElementById('pitchDown').addEventListener('mouseup', () => {
+      this.stopPitchBend(true);
+    });
+    document.getElementById('pitchDown').addEventListener('mouseleave', () => {
+      this.stopPitchBend(false);
+    });
+    
+    // Search buttons
+    document.getElementById('rewind').addEventListener('mousedown', () => {
+      this.startSearch(-1);
+    });
+    document.getElementById('rewind').addEventListener('mouseup', () => {
+      this.stopSearch();
+    });
+    document.getElementById('rewind').addEventListener('mouseleave', () => {
+      this.stopSearch();
+    });
+    
+    document.getElementById('forward').addEventListener('mousedown', () => {
+      this.startSearch(1);
+    });
+    document.getElementById('forward').addEventListener('mouseup', () => {
+      this.stopSearch();
+    });
+    document.getElementById('forward').addEventListener('mouseleave', () => {
+      this.stopSearch();
+    });
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
+        e.preventDefault();
+        this.togglePlayPause();
+      } else if (e.code === 'KeyC') {
+        this.setCue();
+      } else if (e.code === 'ArrowLeft') {
+        this.previousTrack();
+      } else if (e.code === 'ArrowRight') {
+        this.nextTrack();
+      }
+    });
+
+    // Waveform seeking
+    const waveformContainer = document.getElementById('waveformContainer');
+    waveformContainer.addEventListener('mousedown', (e) => {
+      this.handleSeekStart(e);
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      this.handleSeekMove(e);
+    });
+
+    document.addEventListener('mouseup', () => {
+      this.handleSeekEnd();
+    });
+  }
+  
+  async loadFiles(files) {
+    this.tracks = [];
+    const jsmediatags = window.jsmediatags;
+
+    for (let file of files) {
+      try {
+        const [arrayBuffer, tags] = await Promise.all([
+          file.arrayBuffer(),
+          new Promise((resolve) => {
+            jsmediatags.read(file, {
+              onSuccess: (tag) => resolve(tag.tags),
+              onError: () => resolve(null) // Resolve with null if no tags found
+            });
+          })
+        ]);
+
+        // We need to clone the arrayBuffer because decodeAudioData can detach it
+        const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer.slice(0));
+
+        this.tracks.push({
+          name: file.name.replace(/\.[^/.]+$/, ""),
+          buffer: audioBuffer,
+          duration: audioBuffer.duration,
+          tags: tags
+        });
+      } catch (error) {
+        console.error('Error loading file:', file.name, error);
+        // Fallback for files without metadata or with loading errors
+        const arrayBuffer = await file.arrayBuffer();
+        const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+        this.tracks.push({ name: file.name.replace(/\.[^/.]+$/, ""), buffer: audioBuffer, duration: audioBuffer.duration, tags: null });
+      }
+    }
+    
+    if (this.tracks.length > 0) {
+      this.loadTrack(0);
+    }
+  }
+  
+  loadTrack(index) {
+    if (index < 0 || index >= this.tracks.length) return;
+    
+    this.stop();
+    this.currentTrack = index;
+    this.buffer = this.tracks[index].buffer;
+    this.cuePoint = 0;
+    this.hasCuePoint = false;
+    this.startOffset = 0;
+    
+    this.drawWaveform();
+    this.updateAlbumArt();
+    this.updateDisplay();
+  }
+  
+  togglePlayPause() {
+    if (this.isPlaying) {
+      this.pause();
+    } else {
+      this.play();
+    }
+  }
+  
+  play() {
+    if (!this.buffer) return;
+    
+    if (this.audioContext.state === 'suspended') {
+      this.audioContext.resume();
+    }
+    
+    this.source = this.audioContext.createBufferSource();
+    this.source.buffer = this.buffer;
+    
+    const playbackRate = 1 + (this.isPitchEnabled ? this.pitchValue / 100 : 0);
+    this.source.playbackRate.value = playbackRate;
+    
+    this.source.connect(this.gainNode);
+    
+    this.startTime = this.audioContext.currentTime;
+    this.source.start(0, this.startOffset);
+    
+    this.source.onended = () => {
+      if (this.isPlaying) {
+        // Check if we reached the end of the track naturally
+        if (this.getCurrentTime() >= this.buffer.duration - 0.1) {
+            this.nextTrack();
+        }
+      }
+    };
+    
+    this.isPlaying = true;
+    this.animate();
+    this.updateDisplay();
+  }
+  
+  pause() {
+    if (!this.isPlaying) return;
+    
+    this.pauseTime = this.audioContext.currentTime - this.startTime;
+    this.startOffset += this.pauseTime * (1 + (this.isPitchEnabled ? this.pitchValue / 100 : 0));
+    
+    if (this.startOffset > this.buffer.duration) {
+      this.startOffset = this.buffer.duration;
+    }
+    
+    if (this.source) {
+      this.source.stop();
+      this.source = null;
+    }
+    
+    this.isPlaying = false;
+    cancelAnimationFrame(this.animationId);
+    this.updateDisplay();
+  }
+  
+  stop() {
+    if (this.source) {
+      try {
+        this.source.onended = null; // Prevent onended from firing on manual stop
+        this.source.stop();
+      } catch (e) {}
+      this.source = null;
+    }
+    
+    this.isPlaying = false;
+    // Resetting startOffset here is what causes the track to restart.
+    this.startOffset = 0;
+    cancelAnimationFrame(this.animationId);
+    this.updateDisplay();
+  }
+  
+  handleCuePress(event) {
+    if (!this.buffer) return;
+
+    // If playing, set cue or return to cue.
+    if (this.isPlaying) {
+      // If no cue point is set yet, set it at the current position.
+      if (!this.hasCuePoint) {
+        this.cuePoint = this.getCurrentTime();
+        this.hasCuePoint = true;
+        document.getElementById('cueLed').classList.add('led-on');
+        this.updateCueMarker();
+        this.updateDisplay();
+        return;
+      }
+      // If a cue point exists, jump to it and continue playing.
+      const wasPlaying = this.isPlaying;
+      if (wasPlaying) this.pause(); // Pause to stop current playback
+      this.startOffset = this.cuePoint;
+      this.play();
+    } else { // If not playing (paused)
+      // If a cue point is set and we are at it, play for stutter effect.
+      if (this.hasCuePoint && this.getCurrentTime() === this.cuePoint) {
+        this.play();
+      } else {
+        // Otherwise, set a new cue point at the current position.
+        this.cuePoint = this.getCurrentTime();
+        this.hasCuePoint = true;
+        document.getElementById('cueLed').classList.add('led-on');
+        this.updateCueMarker();
+        this.updateDisplay();
+      }
+    }
+  }
+
+  handleCueRelease(event) {
+    if (!this.buffer || !this.hasCuePoint) return;
+
+    // On right-click release (button=2), we let the music continue to play.
+    if (this.isPlaying && event.button === 2) {
+      return; // Do nothing, let it play.
+    }
+
+    // For stutter play (left-click release), stop and return to the cue point.
+    this.pause();
+    this.startOffset = this.cuePoint;
+    this.updateDisplay();
+  }
+  
+  getCurrentTime() {
+    if (!this.buffer) return 0;
+    
+    if (this.isPlaying) {
+      const elapsed = (this.audioContext.currentTime - this.startTime) * (1 + (this.isPitchEnabled ? this.pitchValue / 100 : 0));
+      return Math.min(this.startOffset + elapsed, this.buffer.duration);
+    }
+    
+    return this.startOffset;
+  }
+  
+    previousTrack() {
+    if (!this.buffer) return;
+
+    const wasPlaying = this.isPlaying;
+    const currentTime = this.getCurrentTime();
+
+    // If track has been playing for more than 3 seconds, or we are not on the first track,
+    // pressing 'previous' will restart the current track.
+    if (currentTime > 3 || this.currentTrack === 0) {
+      if (wasPlaying) this.pause();
+      this.startOffset = 0;
+      this.updateDisplay();
+      if (wasPlaying) this.play();
+    } 
+    // If the track is within the first 3 seconds and it's not the first track, go to the previous track.
+    else if (this.currentTrack > 0) {
+      this.loadTrack(this.currentTrack - 1);
+      if (wasPlaying) {
+        this.play();
+      }
+    } else {
+      // If it's the first track and within the first 3 seconds, just restart it.
+      if (wasPlaying) this.pause();
+      this.startOffset = 0;
+      this.updateDisplay();
+      if (wasPlaying) this.play();
+    }
+  }
+  
+  nextTrack() {
+    if (this.currentTrack < this.tracks.length - 1) {
+      const wasPlaying = this.isPlaying;
+      this.loadTrack(this.currentTrack + 1);
+      if (wasPlaying) this.play();
+    }
+  }
+
+  toggleTimeMode() {
+    this.timeMode = this.timeMode === 'elapsed' ? 'remain' : 'elapsed';
+    const btn = document.getElementById('timeBtn');
+    btn.textContent = this.timeMode === 'elapsed' ? 'ELA' : 'REM';
+    document.getElementById('timeMode').textContent = this.timeMode === 'elapsed' ? 'ELAPSED' : 'REMAIN';
+    this.updateDisplay();
+  }
+
+  togglePitch() {
+    this.isPitchEnabled = !this.isPitchEnabled;
+    document.getElementById('pitchBtnText').textContent = this.isPitchEnabled ? 'PITCH ON' : 'PITCH OFF';
+    document.getElementById('pitchBtn').classList.toggle('active', this.isPitchEnabled);
+    
+    if (!this.isPitchEnabled) {
+      this.setPitch(0);
+      document.getElementById('pitchSlider').value = 0;
+    }
+
+    if (this.isPlaying) {
+      // We need to pause and play to apply the new playback rate correctly.
+      this.pause();
+      this.play();
+    } else {
+      // If paused, we still need to update the playback rate for when it resumes.
+      // This requires creating and stopping a dummy source node.
+      // This is a bit of a workaround for the Web Audio API's architecture.
+      const dummySource = this.audioContext.createBufferSource();
+      dummySource.buffer = this.buffer;
+      const playbackRate = 1 + (this.isPitchEnabled ? this.pitchValue / 100 : 0);
+      dummySource.playbackRate.value = playbackRate;
+      // No need to connect or start, the rate is latched for the next real `play()` call.
+    }
+    
+    this.updateDisplay();
+  }
+
+  setPitch(value) {
+    this.pitchValue = value;
+    document.getElementById('pitchValue').textContent = (value >= 0 ? '+' : '') + value.toFixed(1) + '%';
+    document.getElementById('pitchDisplay').textContent = (value >= 0 ? '+' : '') + value.toFixed(1) + '%';
+    
+    const indicator = document.getElementById('pitchIndicator');
+    const percentage = ((10 - value) / 20) * 100;
+    indicator.style.top = percentage + '%';
+    
+    if (this.isPlaying && this.source) {
+      const playbackRate = 1 + (this.isPitchEnabled ? value / 100 : 0);
+      this.source.playbackRate.value = playbackRate;
+    }
+  }
+
+  startPitchBend(direction) {
+    // If pitch is not enabled, do nothing.
+    if (!this.isPitchEnabled) return;
+
+    // If it's currently returning to a pitch, stop that.
+    if (this.pitchReturnInterval) {
+      clearInterval(this.pitchReturnInterval);
+      this.pitchReturnInterval = null;
+    }
+
+    // If a bend/return cycle is not already in progress, store the current pitch.
+    if (this.preBendPitchValue === null) {
+      this.preBendPitchValue = this.pitchValue;
+    }
+
+    // Clear any existing bend interval to prevent multiple intervals from running
+    clearInterval(this.pitchBendInterval);
+    this.pitchBendInterval = null;
+
+    this.pitchBendInterval = setInterval(() => {
+      // Bending is only temporary, so we don't update the slider value directly
+      const tempPitch = this.pitchValue + (direction * 0.5);
+      const newValue = Math.max(-10, Math.min(10, tempPitch));
+      document.getElementById('pitchSlider').value = newValue;
+      this.setPitch(newValue);
+    }, 50);
+  }
+
+  stopPitchBend(isMouseUp) {
+    clearInterval(this.pitchBendInterval);
+    // If the mouse is still down (mouseleave event), don't do anything else.
+    // Only proceed if the button was actually released (mouseup).
+    if (!isMouseUp) return;
+
+    this.pitchBendInterval = null;
+
+    // If we have a pre-bend value, ramp back to it.
+    if (this.preBendPitchValue !== null) {
+      this.pitchReturnInterval = setInterval(() => {
+        const step = 0.1;
+        const difference = this.preBendPitchValue - this.pitchValue;
+
+        if (Math.abs(difference) < step) {
+          this.setPitch(this.preBendPitchValue);
+          document.getElementById('pitchSlider').value = this.preBendPitchValue;
+          clearInterval(this.pitchReturnInterval);
+          this.pitchReturnInterval = null;
+          this.preBendPitchValue = null; // Reset for next time
+        } else {
+          const newPitch = this.pitchValue + (difference > 0 ? step : -step);
+          this.setPitch(newPitch);
+          document.getElementById('pitchSlider').value = newPitch;
+        }
+      }, 10); // A short interval for a smooth ramp
+    }
+  }
+
+  startSearch(direction) {
+    if (this.searchInterval) {
+      clearInterval(this.searchInterval);
+    }
+
+    this.searchInterval = setInterval(() => {
+      if (!this.buffer) return;
+      
+      const wasPlaying = this.isPlaying;
+      const searchIncrement = wasPlaying ? 0.2 : 0.01; // Larger jump when playing, smaller when paused
+      
+      // Update the offset
+      const newOffset = Math.max(0, Math.min(this.buffer.duration, this.startOffset + (direction * searchIncrement)));
+      this.startOffset = newOffset;
+
+      if (wasPlaying) {
+        // If playing, we need to restart from the new position.
+        // This involves a quick pause and play.
+        this.pause();
+        this.startOffset = newOffset; // Re-apply offset after pause calculation
+        this.play();
+      } else {
+        // If paused, play a short stutter and update the display.
+        this.playStutter(this.startOffset, 0.05); // Play 50ms for the stutter effect
+        this.updateDisplay();
+      }
+    }, 100);
+  }
+
+  stopSearch() {
+    if (this.searchInterval) {
+      clearInterval(this.searchInterval);
+      this.searchInterval = null;
+    }
+  }
+
+  playStutter(offset, duration) {
+    if (!this.buffer) return;
+
+    if (this.audioContext.state === 'suspended') {
+      this.audioContext.resume();
+    }
+
+    const stutterSource = this.audioContext.createBufferSource();
+    stutterSource.buffer = this.buffer;
+    stutterSource.connect(this.gainNode);
+
+    const playbackRate = 1 + (this.isPitchEnabled ? this.pitchValue / 100 : 0);
+    stutterSource.playbackRate.value = playbackRate;
+
+    stutterSource.start(0, offset, duration);
+  }
+  
+  handleSeekStart(e) {
+    if (!this.buffer) return;
+
+    this.isSeeking = true;
+    this.wasPlayingBeforeSeek = this.isPlaying;
+
+    if (this.isPlaying) {
+      this.pause();
+    }
+
+    this.updateSeekPosition(e);
+  }
+
+  handleSeekMove(e) {
+    if (!this.isSeeking || !this.buffer) return;
+
+    this.updateSeekPosition(e);
+    // Stutter while dragging for precise cueing when paused
+    if (!this.wasPlayingBeforeSeek) {
+      this.playStutter(this.startOffset, 0.05);
+    }
+  }
+
+  handleSeekEnd() {
+    if (!this.isSeeking) return;
+
+    this.isSeeking = false;
+    if (this.wasPlayingBeforeSeek) {
+      this.play();
+    }
+  }
+
+  updateSeekPosition(e) {
+    const waveformContainer = document.getElementById('waveformContainer');
+    const rect = waveformContainer.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const percentage = Math.max(0, Math.min(1, x / rect.width));
+
+    const newOffset = this.buffer.duration * percentage;
+    this.startOffset = newOffset;
+
+    // If we are setting a cue, update it to the new seek position
+    this.updateDisplay();
+  }
+
+
+    formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    const frames = Math.floor((seconds % 1) * 75);
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}.${frames.toString().padStart(2, '0')}`;
+  }
+  
+  updateDisplay() {
+    if (!this.buffer) {
+      document.getElementById('trackNumber').textContent = '--';
+      document.getElementById('timeDisplay').textContent = '00:00.00';
+      document.getElementById('trackTitle').textContent = 'NO DISC';
+      return;
+    }
+    
+    const currentTime = this.getCurrentTime();
+    const displayTime = this.timeMode === 'elapsed' ? currentTime : this.buffer.duration - currentTime;
+    
+    document.getElementById('trackNumber').textContent = (this.currentTrack + 1).toString().padStart(2, '0');
+    document.getElementById('timeDisplay').textContent = this.formatTime(displayTime);
+    document.getElementById('trackTitle').textContent = this.tracks[this.currentTrack].name.substring(0, 25);
+    
+    this.updatePlayhead();
+  }
+
+  updateAlbumArt() {
+    const albumArtContainer = document.getElementById('albumArt');
+    const track = this.tracks[this.currentTrack];
+    
+    // Clear previous art
+    albumArtContainer.innerHTML = '<span class="material-icons">music_note</span>';
+
+    if (track && track.tags && track.tags.picture) {
+      const { data, format } = track.tags.picture;
+      let base64String = "";
+      for (let i = 0; i < data.length; i++) {
+        base64String += String.fromCharCode(data[i]);
+      }
+      const imageUrl = `data:${format};base64,${window.btoa(base64String)}`;
+      
+      const img = document.createElement('img');
+      img.src = imageUrl;
+      albumArtContainer.innerHTML = ''; // Clear the icon
+      albumArtContainer.appendChild(img);
+    }
+  }
+
+  updatePlayhead() {
+    if (!this.buffer) return;
+    
+    const currentTime = this.getCurrentTime();
+    const percentage = (currentTime / this.buffer.duration) * 100;
+    document.getElementById('playhead').style.left = percentage + '%';
+  }
+  
+  updateCueMarker() {
+    if (!this.buffer || !this.hasCuePoint) {
+      document.getElementById('cueMarker').style.display = 'none';
+      return;
+    }
+    
+    const percentage = (this.cuePoint / this.buffer.duration) * 100;
+    const marker = document.getElementById('cueMarker');
+    marker.style.left = percentage + '%';
+    marker.style.display = 'block';
+  }
+  
+  animate() {
+    if (this.isPlaying) {
+      this.updateDisplay();
+      this.animationId = requestAnimationFrame(() => this.animate());
+    }
+  }
+  
+  drawWaveform() {
+    const canvas = document.getElementById('waveformCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    
+    if (!this.buffer) return;
+    
+    const data = this.buffer.getChannelData(0);
+    const step = Math.ceil(data.length / canvas.width);
+    const amp = canvas.height / 2;
+    
+    ctx.fillStyle = 'rgba(30, 59, 30, 0.3)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.strokeStyle = '#1e3b1e';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    
+    for (let i = 0; i < canvas.width; i++) {
+      let min = 1.0;
+      let max = -1.0;
+      
+      for (let j = 0; j < step; j++) {
+        const datum = data[(i * step) + j];
+        if (datum < min) min = datum;
+        if (datum > max) max = datum;
+      }
+      
+      ctx.moveTo(i, (1 + min) * amp);
+      ctx.lineTo(i, (1 + max) * amp);
+    }
+    
+    ctx.stroke();
+  }
+}
+
+// Initialize the DN-1000F player
+const player = new DN1000F();
+
+// Handle window resize for waveform
+window.addEventListener('resize', () => {
+  if (player.buffer) {
+    player.drawWaveform();
+  }
+});
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-# 🎵 DN-1000F Web Emulator
+# ✈️ FlightDeck Framework
 
 
 [![MIT License](https://img.shields.io/github/license/jasonbra1n/Denon-DN-1000F-Web-Emulator)](LICENSE)
@@ -6,12 +6,14 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/jasonbra1n/Denon-DN-1000F-Web-Emulator)
 
 
-A **modern web-based emulator** for the classic **Denon DN-1000F CD player**, bringing back its iconic functionality to your browser using **Web Audio API** and **JavaScript Media Tags**.
+**FlightDeck Framework** (formerly DN-1000F Web Emulator) is a modular platform for building web-based DJ consoles and audio instrument panels. Developed by **AVDJ ACADEMY**.
 
 
 ## 📌 Overview
 
-This project is a complete **web-based recreation of the Denon DN-1000F audio player**, allowing users to:
+This project serves as the foundation for the **FlightDeck** ecosystem, treating DJ consoles like pilot instrument panels.
+
+Currently featuring the **Denon DN-1000F** emulator:
 - Load and play multiple audio files
 - Navigate tracks (previous/next)
 - Set cues and control playback precisely
@@ -41,19 +43,34 @@ Perfect for **musicians, DJs, and audiophiles** who want to use the features of 
 - A modern browser that supports **Web Audio API** and **JavaScript Media Tags**
 
 ### ✅ Usage Instructions
-1. Open the project in your browser.
-2. Click "LOAD" to upload audio files (supports multiple formats).
-3. Select a file, then click "PLAY/PAUSE" or press `Space` to start playing.
-4. Use buttons or keyboard shortcuts to navigate through tracks and adjust settings.
+1. Open `index.html` in your browser to view the **FlightDeck Launcher**.
+2. Select a console (e.g., **Denon DN-1000F**).
+3. Click "LOAD" to upload audio files (supports multiple formats).
+4. Select a file, then click "PLAY/PAUSE" or press `Space` to start playing.
+5. Use buttons or keyboard shortcuts to navigate through tracks and adjust settings.
 
 ---
 
 ## 📁 Folder Structure
 
-```
-DN-1000F-Web-Emulator/
-├── index.html          # Main HTML file
-└── README.md           # This file
+```text
+/
+├── core/                  # SHARED LOGIC (The "DJ System")
+│   ├── audio/             # AudioEngine.js (Standardized player)
+│   ├── midi/              # MidiController.js (Mapping logic)
+│   └── utils/             # Helpers (Time formatting, file loaders)
+│
+├── consoles/              # DIFFERENT PLAYERS
+│   ├── dn-1000f/          # The current emulator
+│   │   ├── index.html
+│   │   └── style.css
+│   └── ...                # Future consoles
+│
+├── assets/                # SHARED ASSETS
+│   ├── fonts/             # LCD fonts, etc.
+│   └── icons/             # Material icons (local)
+│
+└── index.html             # MAIN LAUNCHER (Select which console to load)
 ```
 
 ---
